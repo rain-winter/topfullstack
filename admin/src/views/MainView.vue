@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="200px">
         <!-- 左侧菜单 begin -->
-        <el-menu default-active="`menu-0`"  @select="handleSelect">
+        <el-menu default-active="`menu-0`" @select="handleSelect" router>
           <el-sub-menu
             v-for="(item, index) in menuList.item"
             :key="`menu-${index}`"
