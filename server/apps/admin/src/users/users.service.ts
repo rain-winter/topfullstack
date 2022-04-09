@@ -11,28 +11,41 @@ export class UsersService {
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    const user = new this.userModel(createUserDto);
+    const user = new this.userModel(createUserDto); // 添加用户
     return await user.save();
   }
 
   async findAll() {
-    const user = this.userModel.find();
+    const user = this.userModel.find(); // 查找所有用户
     return user;
   }
 
-  async findOne(id: string) {
-    const user = await this.userModel.findById({ _id: id });
+  async findOne(id: string): Promise<User> {
+    const user = await this.userModel.findById({ _id: id }); // 查找一个用户
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(_id: string, updateUserDto: UpdateUserDto) {
+    return await this.userModel.findByIdAndUpdate(_id, updateUserDto, {
+      new: true,
+    });
   }
 
   async remove(id: string) {
     const res = await this.userModel.remove({ _id: id });
-    if (res.deletedCount == 1) {
-      success();
+    console.log(res);
+    if (res.deletedCount === 1) {
+      return {
+        code: 200,
+        data: res.deletedCount,
+        message: '删除成功',
+      };
+    } else {
+      return {
+        code: 400,
+        data: res.deletedCount,
+        message: '删除失败',
+      };
     }
   }
 }
