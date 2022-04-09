@@ -4,7 +4,7 @@ import { AdminModule } from './admin.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AdminModule);
-
+  app.enableCors(); // 允许跨域
   const config = new DocumentBuilder()
     .setTitle('全栈之巅')
     .setDescription('The cats API description')

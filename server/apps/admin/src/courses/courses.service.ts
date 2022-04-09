@@ -16,8 +16,13 @@ export class CoursesService {
     return await this.courseModel.create(createCourseDto);
   }
 
-  findAll() {
-    return `This action returns all courses`;
+  async findAll() {
+    const courses = await this.courseModel.find();
+    return {
+      code: 200,
+      message: 'OK',
+      data: courses,
+    };
   }
 
   findOne(id: number) {
