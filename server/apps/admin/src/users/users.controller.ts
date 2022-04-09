@@ -32,7 +32,6 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  // TODO
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
