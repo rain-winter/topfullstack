@@ -7,4 +7,18 @@ export default {
       url: `/courses/${params._id}`,
     })
   },
+  createCourse(params) {
+    return $request({
+      method: 'post',
+      url: `/courses`,
+      data: params,
+    })
+  },
+  // updateCourse(params) {
+  //   return $request({
+  //     method: 'post',
+  //     url: `/courses`,
+  //     data: params,
+  //   })
+  // },
 }

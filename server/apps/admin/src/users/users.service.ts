@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { User } from '@libs/db/models/user.model';
 import { InjectModel } from 'nestjs-typegoose';
+import success from '../utils/common-res';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,8 @@ export class UsersService {
   ) {}
   async create(createUserDto: CreateUserDto) {
     const user = new this.userModel(createUserDto); // 添加用户
-    return await user.save();
+    const res = await user.save();
+    return success(200, 'ok', res);
   }
 
   async findAll() {
@@ -26,9 +28,12 @@ export class UsersService {
   }
 
   async update(_id: string, updateUserDto: UpdateUserDto) {
-    return await this.userModel.findByIdAndUpdate(_id, updateUserDto, {
+    const res = await this.userModel.findByIdAndUpdate(_id, updateUserDto, {
       new: true,
     });
+    if (res) {
+      return success(200, 'ok', res);
+    }
   }
 
   async remove(id: string) {
