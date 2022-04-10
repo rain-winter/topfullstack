@@ -16,6 +16,5 @@ const app = createApp(App)
 app.config.globalProperties.$http = axios.create({
   baseURL: 'http://localhost:3000',
 })
-
+app.config.warnHandler = () => null // 关闭生产环境下的提示
 app.use(store).use(router).use(ElementPlus).use(Avue).mount('#app')
-

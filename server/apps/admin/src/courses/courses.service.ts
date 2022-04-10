@@ -23,8 +23,8 @@ export class CoursesService {
     return success(200, 'OK', courses);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} course`;
+  findOne(id: string) {
+    return `findOne+${id}`;
   }
 
   async update(_id: string, updateCourseDto: UpdateCourseDto) {
@@ -37,7 +37,24 @@ export class CoursesService {
   async remove(id: string) {
     return await this.courseModel.remove({ _id: id });
   }
+
+  options() {
+    return {
+      index: true,
+      title: '课程管理',
+      border: true,
+      align: 'center',
+      menuAlign: 'center',
+      column: [
+        {
+          label: '课程',
+          prop: 'name',
+        },
+        {
+          label: '课程封面',
+          prop: 'cover',
+        },
+      ],
+    };
+  }
 }
-// return await this.userModel.findByIdAndUpdate(_id, updateUserDto, {
-//   new: true,
-// });

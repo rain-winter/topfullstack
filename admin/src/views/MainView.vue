@@ -3,7 +3,12 @@
     <el-container>
       <el-aside width="200px">
         <!-- 左侧菜单 begin -->
-        <el-menu @select="handleSelect" :default-active="`1`" router active-text-color="#3498db">
+        <el-menu
+          @select="handleSelect"
+          :default-active="`1`"
+          router
+          active-text-color="#3498db"
+        >
           <el-sub-menu
             v-for="(item, index) in menuList.item"
             :key="`menu-${index}`"
@@ -27,7 +32,8 @@
       <el-container>
         <el-header>nestjs-后台管理系统</el-header>
         <el-main>
-          <router-view></router-view>
+          <!-- 加在子路由上 -->
+          <router-view :key="$route.path" />
         </el-main>
         <el-footer>Footer</el-footer>
       </el-container>

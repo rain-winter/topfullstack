@@ -19,8 +19,9 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         name: 'courses',
-        path: '/courses/list',
+        path: '/:resource/list',
         component: CoursesCrud,
+        props: true,
       },
 
       // {
