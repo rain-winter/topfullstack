@@ -3,11 +3,12 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>-->
-  <router-view />
+  <!-- 路由的更新是基于组件名的 -->
+  <!-- 我们创建课程和编辑课程都是用的CourseEditView需要指定name -->
+  <router-view :key="$route.path" />
 </template>
 
-<style lang="scss">
-// #app {
+<style lang="scss">// #app {
 //   font-family: Avenir, Helvetica, Arial, sans-serif;
 //   -webkit-font-smoothing: antialiased;
 //   -moz-osx-font-smoothing: grayscale;
@@ -26,5 +27,4 @@
 //       color: #42b983;
 //     }
 //   }
-// }
-</style>
+// }</style>

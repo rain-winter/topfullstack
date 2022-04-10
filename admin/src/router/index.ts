@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MainView from '../views/MainView.vue'
 import CoursesListView from '../views/courses/CoursesListView.vue'
+import CourseEditView from '../views/courses/CourseEditView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,16 @@ const routes: Array<RouteRecordRaw> = [
         name: 'courses',
         path: '/courses/list',
         component: CoursesListView,
+      },
+      {
+        name: 'courses-edit',
+        path: '/courses/edit/:id',
+        component: CourseEditView,
+      },
+      {
+        name: 'courses-create',
+        path: '/courses/create',
+        component: CourseEditView,
       },
     ],
   },
