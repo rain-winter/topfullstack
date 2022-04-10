@@ -33,7 +33,7 @@ export class CoursesService {
     return `This action updates a #${id} course`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} course`;
+  async remove(id: string) {
+    return await this.courseModel.remove({ _id: id });
   }
 }

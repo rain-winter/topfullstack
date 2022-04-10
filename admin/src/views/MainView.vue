@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="200px">
         <!-- 左侧菜单 begin -->
-        <el-menu default-active="`menu-0`" @select="handleSelect" router>
+        <el-menu @select="handleSelect" :default-active="`1`" router active-text-color="#3498db">
           <el-sub-menu
             v-for="(item, index) in menuList.item"
             :key="`menu-${index}`"
@@ -17,7 +17,8 @@
               :key="`menu-item-${index}-${subIndex}`"
               :index="subItem.path"
               @click="handleMenuClick(subItem)"
-            >{{ subItem.title }}</el-menu-item>
+              >{{ subItem.title }}</el-menu-item
+            >
           </el-sub-menu>
         </el-menu>
       </el-aside>
@@ -34,55 +35,56 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive } from "vue";
 export default defineComponent({
   // 已启用类型推断
   setup() {
     const menu = {
       item: [
         {
-          title: '内容管理',
+          title: "内容管理",
           items: [
             {
-              title: '首页',
-              path: '/'
+              title: "首页",
+              path: "/",
             },
             {
-              title: '课程管理',
-              path: '/courses/list'
+              title: "课程管理",
+              path: "/courses/list",
             },
             {
-              title: '课时管理',
-              path: '/elpse/list'
-            }
-          ]
-        }, {
-          title: '运营管理',
+              title: "课时管理",
+              path: "/elpse/list",
+            },
+          ],
+        },
+        {
+          title: "运营管理",
           items: [
             {
-              title: '首页',
-              path: '/'
+              title: "首页",
+              path: "/",
             },
             {
-              title: '用户管理',
-              path: '/users/list'
-            }
-          ]
-        }
-      ]
-    }
+              title: "用户管理",
+              path: "/users/list",
+            },
+          ],
+        },
+      ],
+    };
     const handleMenuClick = (e: any) => {
-      console.log(e)
-    }
+      console.log(e);
+    };
     const handleSelect = () => {
-      console.log('select')
-    }
-    const menuList = reactive(menu)
+      console.log("select");
+    };
+    const menuList = reactive(menu);
     return {
       menuList,
       handleMenuClick,
-      handleSelect
-    }
-  }
-})
+      handleSelect,
+    };
+  },
+});
 </script>
