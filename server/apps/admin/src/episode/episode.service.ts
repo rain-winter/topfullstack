@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
 import { UpdateEpisodeDto } from './dto/update-episode.dto';
+import success from '../utils/common-res';
 
 @Injectable()
 export class EpisodeService {
@@ -13,11 +14,13 @@ export class EpisodeService {
   ) {}
 
   async create(createEpisodeDto: CreateEpisodeDto) {
-    return await this.episodeModel.create(createEpisodeDto);
+    const res = await this.episodeModel.create(createEpisodeDto);
+    return success(200, 'ok', res);
   }
 
-  findAll() {
-    return `This action returns all episode`;
+  async findAll() {
+    const res = await this.episodeModel.find();
+    return success(200, 'ok', res);
   }
 
   findOne(id: number) {
@@ -28,7 +31,28 @@ export class EpisodeService {
     return `This action updates a #${id} episode`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} episode`;
+  async remove(id: string) {
+    const res = await this.episodeModel.remove({ _id: id });
+    return success(200, 'ok', res);
+  }
+
+  options() {
+    return {
+      index: true,
+      title: '课程管理',
+      border: true,
+      align: 'center',
+      menuAlign: 'center',
+      column: [
+        {
+          label: '课程',
+          prop: 'name',
+        },
+        {
+          label: '课程封面',
+          prop: 'file',
+        },
+      ],
+    };
   }
 }

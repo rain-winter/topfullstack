@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MainView from '../views/MainView.vue'
 // import CoursesListView from '../views/courses/CoursesListView.vue'
 // import CourseEditView from '../views/courses/CourseEditView.vue'
-import CoursesCrud from '../views/courses/CoursesCrud.vue'
+import CoursesCrud from '../views/ResourcesCrud.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {

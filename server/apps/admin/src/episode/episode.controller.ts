@@ -13,7 +13,7 @@ import { UpdateEpisodeDto } from './dto/update-episode.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('课时')
-@Controller('episode')
+@Controller('episodes')
 export class EpisodeController {
   constructor(private readonly episodeService: EpisodeService) {}
 
@@ -39,6 +39,11 @@ export class EpisodeController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.episodeService.remove(+id);
+    return this.episodeService.remove(id);
+  }
+
+  @Get('/options/list')
+  options() {
+    return this.episodeService.options();
   }
 }

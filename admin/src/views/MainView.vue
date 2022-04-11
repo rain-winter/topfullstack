@@ -3,27 +3,13 @@
     <el-container>
       <el-aside width="200px">
         <!-- 左侧菜单 begin -->
-        <el-menu
-          @select="handleSelect"
-          :default-active="`1`"
-          router
-          active-text-color="#3498db"
-        >
-          <el-sub-menu
-            v-for="(item, index) in menuList.item"
-            :key="`menu-${index}`"
-            :index="`menu-${index}`"
-          >
+        <el-menu @select="handleSelect" :default-active="1" router active-text-color="#3498db">
+          <el-sub-menu v-for="(item, index) in menuList.item" :key="`menu-${index}`" :index="`menu-${index}`">
             <template #title>
               <span>{{ item.title }}</span>
             </template>
-            <el-menu-item
-              v-for="(subItem, subIndex) in item.items"
-              :key="`menu-item-${index}-${subIndex}`"
-              :index="subItem.path"
-              @click="handleMenuClick(subItem)"
-              >{{ subItem.title }}</el-menu-item
-            >
+            <el-menu-item v-for="(subItem, subIndex) in item.items" :key="`menu-item-${index}-${subIndex}`"
+              :index="subItem.path" @click="handleMenuClick(subItem)">{{ subItem.title }}</el-menu-item>
           </el-sub-menu>
         </el-menu>
       </el-aside>
@@ -37,8 +23,7 @@
         </el-main>
         <el-footer>Footer</el-footer>
       </el-container>
-    </el-container>
-  </div>
+    </el-container>  </div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
@@ -60,17 +45,13 @@ export default defineComponent({
             },
             {
               title: "课时管理",
-              path: "/elpse/list",
+              path: "/episodes/list",
             },
           ],
         },
         {
           title: "运营管理",
           items: [
-            {
-              title: "首页",
-              path: "/",
-            },
             {
               title: "用户管理",
               path: "/users/list",

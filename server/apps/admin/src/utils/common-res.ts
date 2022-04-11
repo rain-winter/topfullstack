@@ -15,4 +15,12 @@ function success(code = 200, msg, data?): unknown {
   }
 }
 
+// function ApiResponse(code?: number, msg?: string, data?: unknown): unknown;
+// function ApiResponse(code = 200, msg: '操作成功', data?: unknown): unknown {
+//   return {
+//     code,
+//     msg,
+//     data,
+//   };
+// }
 export default success;
