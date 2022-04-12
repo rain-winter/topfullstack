@@ -1,3 +1,4 @@
+import { PageDto } from './../common/page.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Episode } from '@libs/db/models/episode.model';
 import { Injectable } from '@nestjs/common';
@@ -18,9 +19,30 @@ export class EpisodeService {
     return success(200, 'ok', res);
   }
 
-  async findAll() {
-    const res = await this.episodeModel.find();
-    return success(200, 'ok', res);
+  async findAll(page?: PageDto) {
+    if (page.currentPage && page.pageSize) {
+      const { currentPage, pageSize } = page;
+      let total;
+      this.episodeModel.estimatedDocumentCount({}, (err, count) => {
+        // console.log(count);
+        total = count;
+      });
+      const users = await this.episodeModel
+        .find()
+        .skip((currentPage - 1) * pageSize)
+        .limit(pageSize)
+        .sort({ _id: -1 });
+
+      return {
+        code: 200,
+        msg: '获取成功',
+        total,
+        data: users,
+      };
+    } else {
+      const user = await this.episodeModel.find(); // 查找所有用户
+      return success(200, 'ok', user);
+    }
   }
 
   findOne(id: number) {

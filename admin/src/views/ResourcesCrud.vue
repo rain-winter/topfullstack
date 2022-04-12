@@ -78,6 +78,7 @@ const createResource = async (form, done, loading) => {
   await axios.post(`http://localhost:3000/${props.resource}`, form).then((res) => {
     console.log(res);
   });
+  getResourceList()
   msgsuccess("添加成功");
   done();
 };

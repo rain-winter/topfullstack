@@ -1,3 +1,4 @@
+import { PageDto } from './../common/page.dto';
 import { Course } from '@libs/db/models/course.model';
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -18,9 +19,30 @@ export class CoursesService {
     return success(200, 'OK', res);
   }
 
-  async findAll() {
-    const courses = await this.courseModel.find();
-    return success(200, 'OK', courses);
+  async findAll(page?: PageDto) {
+    if (page.currentPage && page.pageSize) {
+      const { currentPage, pageSize } = page;
+      let total;
+      this.courseModel.estimatedDocumentCount({}, (err, count) => {
+        // console.log(count);
+        total = count;
+      });
+      const courses = await this.courseModel
+        .find()
+        .skip((currentPage - 1) * pageSize)
+        .limit(pageSize)
+        .sort({ _id: -1 });
+
+      return {
+        code: 200,
+        msg: '获取成功',
+        total,
+        data: courses,
+      };
+    } else {
+      const courses = await this.courseModel.find(); // 查找所有用户
+      return success(200, 'ok', courses);
+    }
   }
 
   findOne(id: string) {

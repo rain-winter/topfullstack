@@ -1,3 +1,4 @@
+import { PageDto } from './../common/page.dto';
 import {
   Controller,
   Get,
@@ -6,6 +7,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EpisodeService } from './episode.service';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
@@ -23,8 +25,8 @@ export class EpisodeController {
   }
 
   @Get()
-  findAll() {
-    return this.episodeService.findAll();
+  findAll(@Query() page: PageDto) {
+    return this.episodeService.findAll(page);
   }
 
   @Get(':id')

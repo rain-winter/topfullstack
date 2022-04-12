@@ -11,9 +11,8 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiParam, ApiProperty, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { PageDto } from './dto/page.dto';
-import success from '../utils/common-res';
+import { ApiTags } from '@nestjs/swagger';
+import { PageDto } from '../common/page.dto';
 
 @ApiTags('用户')
 @Controller('users')

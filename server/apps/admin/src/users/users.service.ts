@@ -1,11 +1,11 @@
-import { Injectable, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { User } from '@libs/db/models/user.model';
 import { InjectModel } from 'nestjs-typegoose';
 import success from '../utils/common-res';
-import { PageDto } from './dto/page.dto';
+import { PageDto } from '../common/page.dto';
 
 @Injectable()
 export class UsersService {

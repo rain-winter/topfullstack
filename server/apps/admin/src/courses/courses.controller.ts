@@ -1,3 +1,4 @@
+import { PageDto } from './../common/page.dto';
 import { ApiTags } from '@nestjs/swagger';
 import {
   Controller,
@@ -7,6 +8,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 
 import { CoursesService } from './courses.service';
@@ -23,9 +25,13 @@ export class CoursesController {
     return this.coursesService.create(createCourseDto);
   }
 
+  /**
+   * page：当前页 PageSize：当前页限制的数量
+   * @returns
+   */
   @Get()
-  findAll() {
-    return this.coursesService.findAll();
+  findAll(@Query() page?: PageDto) {
+    return this.coursesService.findAll(page);
   }
 
   @Get(':id')
