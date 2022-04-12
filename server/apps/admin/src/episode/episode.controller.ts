@@ -34,7 +34,7 @@ export class EpisodeController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEpisodeDto: UpdateEpisodeDto) {
-    return this.episodeService.update(+id, updateEpisodeDto);
+    return this.episodeService.update(id, updateEpisodeDto);
   }
 
   @Delete(':id')

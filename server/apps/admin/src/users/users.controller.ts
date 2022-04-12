@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiProperty, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { PageDto } from './dto/page.dto';
+import success from '../utils/common-res';
 
 @ApiTags('用户')
 @Controller('users')
@@ -22,9 +25,13 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  /**
+   * page：当前页 PageSize：当前页限制的数量
+   * @returns
+   */
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query() page?: PageDto) {
+    return this.usersService.findAll(page);
   }
 
   @Get(':id')
@@ -40,5 +47,10 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Get('/options/list')
+  options() {
+    return this.usersService.options();
   }
 }

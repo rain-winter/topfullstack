@@ -1,87 +1,109 @@
 <template>
-  <div>
-    <avue-crud :data="state.data.data" :option="state.option" @row-save="createCourse" @row-update="updateCourse"
-      @row-del="delCourse"></avue-crud>  </div>
+  <avue-crud
+    :data="state.data.data"
+    v-model:page="state.page"
+    :option="state.option"
+    @row-save="createResource"
+    @current-change="currentChange"
+    @size-change="sizeChange"
+    @row-update="updateResource"
+    @row-del="delCourse"
+  ></avue-crud>
 </template>
 <script setup lang="ts">
-import { reactive, toRefs, defineProps } from "vue";
+import { reactive, defineProps } from "vue";
 import axios from "axios";
-import request from "../utils/request";
-import $api from "../api/index";
 import { ElMessage } from "element-plus";
 
 // 接受 路由传递给页面的参数
 const props = defineProps<{
-  resource: string
-}>()
-console.log(props.resource)
+  resource: string;
+}>();
 
-interface dataType {
-  code: number
-  msg: string
-  data: unknown
-}
-
-const state = reactive({
+const state = reactive<any>({
   data: {},
   option: {},
+  page: {
+    pagerCount: 7,
+    currentPage: 1,
+    pageSize: 7,
+    total: 0,
+    layout: "total, prev, pager, next, jumper",
+  },
 });
-const getCourseList = (): void => {
-  axios.get(`http://localhost:3000/${props.resource}`).then((res) => {
-    state.data = res.data;
+const msgsuccess = (msg) => {
+  ElMessage({
+    message: msg,
+    type: "success",
   });
+};
+const getOptions = () => {
   axios.get(`http://localhost:3000/${props.resource}/options/list`).then((res) => {
     state.option = res.data;
   });
 };
-getCourseList();
 
-const createCourse = async (form, done, loading) => {
-  // await $api.createCourse(form).then(() => {
-  //   getCourseList();
-  // });
-  await request({
-    method: "post",
-    url: `/${props.resource}`,
-    data: form,
-  }).then(() => {
-    getCourseList();
-    ElMessage({
-      message: "添加成功",
-      type: "success",
+// 获取资源列表
+const getResourceList = (
+  currentPage: number = state.page.currentPage,
+  pageSize: number = state.page.pageSize
+) => {
+  axios
+    .get(`http://localhost:3000/${props.resource}`, {
+      params: {
+        currentPage,
+        pageSize,
+      },
+    })
+    .then((res) => {
+      state.data = res.data;
+      state.page.total = res.data.total;
     });
-  })
+};
+getOptions();
+getResourceList();
+
+// 改变 条数
+const currentChange = (val) => {
+  getResourceList(val, state.page.pageSize);
+};
+
+// 改变 页码
+const sizeChange = (val) => {
+  getResourceList(state.page.currentPage, val);
+};
+
+// 添加
+const createResource = async (form, done, loading) => {
+  await axios.post(`http://localhost:3000/${props.resource}`, form).then((res) => {
+    console.log(res);
+  });
+  msgsuccess("添加成功");
   done();
 };
 
-const updateCourse = async (form, index, done, loading) => {
+// 更新
+const updateResource = async (form, index, done, loading) => {
   let data = JSON.parse(JSON.stringify(form));
   delete data.$index;
-  request({
-    method: "patch",
-    url: `/${props.resource}/${form._id}`,
-    data,
-  }).then(() => {
-    getCourseList();
-    ElMessage({
-      message: "修改成功",
-      type: "success",
+  await axios
+    .patch(`http://localhost:3000/${props.resource}/${form._id}`, data)
+    .then((res) => {
+      console.log(res);
     });
-  });
+  msgsuccess("更新成功");
+  getResourceList();
   done();
 };
 
+// 删除
 const delCourse = async (form, index) => {
-  await request({
-    method: "delete",
-    url: `/${props.resource}/${form._id}`,
-  }).then((res) => {
-    console.log(res)
-    ElMessage({
-      message: "删除成功",
-      type: "success",
+  await axios
+    .delete(`http://localhost:3000/${props.resource}/${form._id}`)
+    .then((res) => {
+      console.log(res);
     });
-    getCourseList();
-  });
+  msgsuccess("删除成功");
+  getResourceList();
 };
 </script>

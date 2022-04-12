@@ -27,8 +27,17 @@ export class EpisodeService {
     return `This action returns a #${id} episode`;
   }
 
-  update(id: number, updateEpisodeDto: UpdateEpisodeDto) {
-    return `This action updates a #${id} episode`;
+  async update(_id: string, updateEpisodeDto: UpdateEpisodeDto) {
+    const res = await this.episodeModel.findByIdAndUpdate(
+      _id,
+      updateEpisodeDto,
+      {
+        new: true,
+      },
+    );
+    if (res) {
+      return success(200, 'ok', res);
+    }
   }
 
   async remove(id: string) {
