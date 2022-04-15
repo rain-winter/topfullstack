@@ -1,4 +1,4 @@
-import { PageDto } from './../common/page.dto';
+import { PageDto } from '../common/page.dto';
 import { ApiTags } from '@nestjs/swagger';
 import {
   Controller,

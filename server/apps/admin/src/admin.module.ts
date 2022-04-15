@@ -1,13 +1,22 @@
+import { AdminController } from './admin.controller';
 import { DbModule } from '@libs/db';
 import { Module } from '@nestjs/common';
-import { AdminService } from './admin.service';
 import { UsersModule } from './users/users.module';
 import { CoursesModule } from './courses/courses.module';
 import { EpisodeModule } from './episode/episode.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [DbModule, UsersModule, CoursesModule, EpisodeModule],
-  controllers: [],
-  providers: [AdminService],
+  imports: [
+    DbModule,
+    UsersModule,
+    CoursesModule,
+    EpisodeModule,
+    MulterModule.register({
+      dest: 'uploads', // 根目录创建uploads文件夹
+    }),
+  ],
+  controllers: [AdminController],
+  providers: [],
 })
 export class AdminModule {}

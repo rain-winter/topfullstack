@@ -1,4 +1,4 @@
-import { PageDto } from './../common/page.dto';
+import { PageDto } from '../common/page.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Episode } from '@libs/db/models/episode.model';
 import { Injectable } from '@nestjs/common';

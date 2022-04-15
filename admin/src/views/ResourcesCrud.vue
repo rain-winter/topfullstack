@@ -1,13 +1,15 @@
 <template>
   <avue-crud
     :data="state.data.data"
-    v-model:page="state.page"
     :option="state.option"
+    v-model:page="state.page"
+    v-model:search="state.search"
     @row-save="createResource"
     @current-change="currentChange"
     @size-change="sizeChange"
     @row-update="updateResource"
     @row-del="delCourse"
+    @search-change="searchChange"
   ></avue-crud>
 </template>
 <script setup lang="ts">
@@ -23,6 +25,9 @@ const props = defineProps<{
 const state = reactive<any>({
   data: {},
   option: {},
+  search: {
+    name: "dell",
+  },
   page: {
     pagerCount: 7,
     currentPage: 1,
@@ -78,7 +83,7 @@ const createResource = async (form, done, loading) => {
   await axios.post(`http://localhost:3000/${props.resource}`, form).then((res) => {
     console.log(res);
   });
-  getResourceList()
+  getResourceList();
   msgsuccess("添加成功");
   done();
 };
@@ -107,4 +112,17 @@ const delCourse = async (form, index) => {
   msgsuccess("删除成功");
   getResourceList();
 };
+
+const searchChange = (params, done) => {
+  state.search = params;
+  getResourceList()
+  console.log(params);
+  done();
+};
 </script>
+<style>
+/* avue-form__group--flex */
+/* .avue-form__group--flex {
+  display: inline-block !important;
+} */
+</style>

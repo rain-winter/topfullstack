@@ -4,7 +4,7 @@
 const env = 'dev' || 'prod'
 const envConfig = {
   dev: {
-    baseApi: 'http://localhost:3000/',
+    baseApi: 'http://localhost:3000',
     mockApi:
       'https://www.fastmock.site/mock/40686df6be86cb9ab3c58f6782762add/api',
   },
