@@ -2,30 +2,39 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 // import HelloWorld from '../components/HelloWorld.vue'
 import Main from '../views/Main.vue'
-import Course from '../views/course/Course.vue'
+import CourseList from '../views/course/CourseList.vue'
 
 const routes = [
   {
     name: '主页',
     path: '/',
     component: Main,
+    redirect: '/welcome',
     children: [
       {
-        path: '/courses',
-        component: Course,
+        name: 'welcome',
+        path: '/welcome',
+        component: () => import('../views/welcome/Welcome.vue')
+      },
+      {
+        name: 'courses',
+        path: '/courses/list',
+        component: () => import('../views/course/CourseList.vue'),
+      },
+      {
+        name: 'episodes',
+        path: '/episodes/list',
+        component: () => import('../views/episode/EpisodeList.vue')
+      },
+      {
+        name: 'users',
+        path: '/users/list',
+        component: () => import('../views/user/UserList.vue')
       }
     ]
-
   },
-  // {
-  //   name: 'login',
-  //   path: '/login',
-  //   meta: {
-  //     title: '登录'
-  //   },
-  //   component: () => import('../views/Login.vue')
-  // }
 ]
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
