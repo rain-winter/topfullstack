@@ -74,12 +74,15 @@ export class CoursesService {
           row: true,
         },
         {
+          label: '课程封面',
           prop: 'cover',
-          label: '课程封面图',
           type: 'upload',
-          width: 120,
           listType: 'picture-img',
-          row: true,
+          span: 24,
+          propsHttp: {
+            home: 'http://localhost:3000',
+          },
+          tip: '只能上传jpg/png用户头像，且不超过500kb',
           action: 'http://localhost:3000/upload',
         },
         // {
@@ -89,9 +92,6 @@ export class CoursesService {
         //   type: 'upload',
         //   listType: 'picture-img',
         //   span: 24,
-        //   // propsHttp: {
-        //   //   home: 'http://localhost:3000/',
-        //   // },
         //   tip: '只能上传jpg/png用户头像，且不超过500kb',
         //   action: 'http://localhost:3000/upload',
         // },

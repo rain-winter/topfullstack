@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
         component: CoursesCrud,
         props: true,
       },
+      {
+        path: '/test',
+        name: 'test',
+        component: () => import('../views/test/AvueView.vue'),
+      },
 
       // {
       //   name: 'courses',
