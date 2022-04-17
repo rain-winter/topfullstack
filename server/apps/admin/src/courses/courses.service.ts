@@ -80,7 +80,7 @@ export class CoursesService {
           listType: 'picture-img',
           span: 24,
           propsHttp: {
-            home: 'http://localhost:3000',
+            res: 'data',
           },
           tip: '只能上传jpg/png用户头像，且不超过500kb',
           action: 'http://localhost:3000/upload',

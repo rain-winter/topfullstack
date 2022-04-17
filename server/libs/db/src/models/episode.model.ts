@@ -1,3 +1,5 @@
+import { Ref } from '@typegoose/typegoose';
+import { Course } from './course.model';
 /**
  * 课时（一小节一小节的视频）
  */
@@ -15,4 +17,7 @@ export class Episode {
 
   @Prop()
   file: string;
+
+  @Prop({ ref: 'Course' })
+  course: Ref<Course>;
 }

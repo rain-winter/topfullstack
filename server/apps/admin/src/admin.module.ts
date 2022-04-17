@@ -13,7 +13,8 @@ import { MulterModule } from '@nestjs/platform-express';
     CoursesModule,
     EpisodeModule,
     MulterModule.register({
-      dest: 'uploads', // 根目录创建uploads文件夹
+      // storage:
+      dest: 'uploads', // dest是文件夹。存在本地根目录创建uploads文件夹
     }),
   ],
   controllers: [AdminController],

@@ -17,6 +17,6 @@ export class Course {
   @Prop()
   cover: string;
 
-  @Prop({ type: String, required: true, default: [], itemsRef: 'Episode' })
-  episodes: Ref<Episode>[];
+  // @Prop({ type: String, required: true, default: [], itemsRef: 'Episode' })
+  // episodes: Ref<Episode>[];
 }
