@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -10,14 +11,16 @@ async function bootstrap() {
     prefix: '/uploads',
   });
   const config = new DocumentBuilder()
-    .setTitle('全栈之巅')
+    .setTitle('全栈之巅后台管理API')
     .setDescription('The cats API description')
     .setVersion('1.0')
     .addTag('🚀')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-doc', app, document);
-  await app.listen(3000);
-  console.log('localhost:3000');
+  // 从环境变量中取出port
+  const PORT = process.env.ADMIN_PORT || 3000;
+  await app.listen(PORT);
+  Logger.debug(`http://localhost:${PORT}/api-doc`);
 }
 bootstrap();
