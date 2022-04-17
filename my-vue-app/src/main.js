@@ -11,3 +11,6 @@ axios.defaults.baseURL = 'http://localhost:3000/'
 const app = createApp(App)
 app.use(router).use(ElementPlus)
 app.mount('#app')
+
+console.log(import.meta.env.MODE)
+console.log(import.meta.env.DEV)
