@@ -27,3 +27,6 @@ yarn build
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
+
+pages 不能为空
+nuxt 用户代码片段
