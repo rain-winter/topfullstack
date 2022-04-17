@@ -2,11 +2,12 @@
   <el-button type="primary" @click="dialogTableVisible = true">添加课程</el-button>
 
   <!-- 添加课程弹出框 -->
+  <!-- 记得改后台的地址 -->
   <el-dialog v-model="dialogTableVisible" title="课程" destroy-on-close>
     <el-input v-model="name" placeholder="请输入课程名称" clearable />
     <el-upload
       class="avatar-uploader"
-      action="http://localhost:3000/upload"
+      action="http://localhost:3009/upload"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
@@ -102,21 +103,21 @@ const addCourse = async () => {
 };
 
 const handleAvatarSuccess = (response, uploadFile) => {
-  console.log(uploadFile);
+  console.log("uploadFile", uploadFile);
   if (uploadFile.status === "success") {
-    cover.value = response.url;
+    cover.value = `http://localhost:3009/${response.url}`;
   }
   // imageUrl.value = URL.createObjectURL(uploadFile.raw)
 };
 
 const beforeAvatarUpload = (rawFile) => {
-  if (rawFile.type !== "image/jpeg") {
-    ElMessage.error("Avatar picture must be JPG format!");
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!");
-    return false;
-  }
+  // if (rawFile.type !== "image/jpeg") {
+  //   ElMessage.error("Avatar picture must be JPG format!");
+  //   return false;
+  // } else if (rawFile.size / 1024 / 1024 > 2) {
+  //   ElMessage.error("Avatar picture size can not exceed 2MB!");
+  //   return false;
+  // }
   return true;
 };
 

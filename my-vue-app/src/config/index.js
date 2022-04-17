@@ -2,7 +2,7 @@ const env = import.meta.env || 'prod'
 
 const envConfig = {
   dev: {
-    baseApi: '',
+    baseApi: 'http://localhost:3009/',
     mockApi: ''
   },
   prod: {
@@ -17,6 +17,6 @@ const envConfig = {
 
 export default {
   env: env,
-  mock: true,
+  mock: false,
   ...envConfig[env]
 }

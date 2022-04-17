@@ -6,7 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3000/'
+axios.defaults.baseURL = 'http://localhost:3009/' // 后端地址
 
 const app = createApp(App)
 app.use(router).use(ElementPlus)

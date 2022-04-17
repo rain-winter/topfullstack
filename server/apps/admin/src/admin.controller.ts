@@ -15,7 +15,7 @@ export class AdminController {
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
     return {
-      url: `http://localhost:3000/uploads/${file.filename}`,
+      url: file.path,
     };
   }
 }
