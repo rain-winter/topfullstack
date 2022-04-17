@@ -24,6 +24,7 @@
     </template>
   </el-dialog>
 
+  <!-- 表格 -->
   <el-table :data="state.tableData" style="width: 100%" table-layout="fixed">
     <el-table-column type="index" />
     <el-table-column label="用户名">
@@ -89,17 +90,15 @@ const getCourseList = () => {
 };
 getCourseList();
 
-const addCourse = () => {
-  axios
+const addCourse = async () => {
+  await axios
     .post("/courses", {
       name: name.value,
       cover: cover.value,
     })
-    .then((res) => {
-      console.log(res);
-      getCourseList();
-      dialogTableVisible = false;
-    });
+    .then((res) => {});
+  dialogTableVisible.value = false;
+  getCourseList();
 };
 
 const handleAvatarSuccess = (response, uploadFile) => {
