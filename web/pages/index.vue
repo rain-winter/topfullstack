@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import {} from "vue";
+import {} from 'vue'
 </script>
 
 <style scoped></style>
