@@ -18,6 +18,6 @@ export class Episode {
   @Prop()
   file: string;
 
-  @Prop({ ref: 'Course' })
+  @Prop({ ref: () => Course })
   course: Ref<Course>;
 }
