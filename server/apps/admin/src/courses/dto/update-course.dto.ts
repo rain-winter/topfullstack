@@ -3,8 +3,11 @@ import { CreateCourseDto } from './create-course.dto';
 
 export class UpdateCourseDto extends PartialType(CreateCourseDto) {
   @ApiProperty({ description: '课程名字' })
-  name: string;
+  name?: string;
 
   @ApiProperty({ description: '封面' })
-  cover: string;
+  cover?: string;
+
+  @ApiProperty({ description: '作者' })
+  author?: string;
 }

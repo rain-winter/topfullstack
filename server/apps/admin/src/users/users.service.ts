@@ -80,31 +80,10 @@ export class UsersService {
     }
   }
 
+  // 
   options() {
     return {
-      index: true,
-      title: '课程管理',
-      border: true,
-      align: 'center',
-      stripe: true,
-      column: [
-        {
-          label: '用户名称',
-          prop: 'username',
-          // search: true,
-          // searchOrder: 1, // 排序字段
-          // searchValue: 'small',
-          span: 24,
-          action: '/imgupload',
-          // searchRules: [
-          //   {
-          //     required: true,
-          //     message: '请输入姓名',
-          //     trigger: 'blur',
-          //   },
-          // ],
-        },
-      ],
+      username,
     };
   }
 }

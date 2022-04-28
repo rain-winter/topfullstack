@@ -17,6 +17,10 @@ export class Course {
   @Prop()
   cover: string;
 
+  @ApiProperty({ description: '作者' })
+  @Prop()
+  author: string;
+
   // @Prop({ type: String, required: true, default: [], itemsRef: 'Episode' })
   // episodes: Ref<Episode>[];
 }

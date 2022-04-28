@@ -24,6 +24,7 @@ export class EpisodeController {
     return this.episodeService.create(createEpisodeDto);
   }
 
+  // 分页
   @Get()
   findAll(@Query() page: PageDto) {
     return this.episodeService.findAll(page);

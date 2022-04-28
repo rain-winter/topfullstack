@@ -1,6 +1,7 @@
 import { PageDto } from '../common/page.dto';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { Episode } from '@libs/db/models/episode.model';
+import { Course } from '@libs/db/models/course.model';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
@@ -18,6 +19,13 @@ export class EpisodeService {
     const res = await this.episodeModel.create(createEpisodeDto);
     return success(200, 'ok', res);
   }
+  async findAllByCoueseId(page?: PageDto) {
+    // Episode需要有courseId
+    const res = await this.episodeModel
+      .find()
+      .populate('courseId', 'name cover');
+    console.log(res);
+  }
 
   async findAll(page?: PageDto) {
     if (page.currentPage && page.pageSize) {
@@ -29,6 +37,7 @@ export class EpisodeService {
       });
       const users = await this.episodeModel
         .find()
+        .populate('courseId', 'name cover')
         .skip((currentPage - 1) * pageSize)
         .limit(pageSize)
         .sort({ _id: -1 });
@@ -40,7 +49,9 @@ export class EpisodeService {
         data: users,
       };
     } else {
-      const user = await this.episodeModel.find(); // 查找所有用户
+      const user = await this.episodeModel
+        .find()
+        .populate('courseId', 'name cover'); // 查找所有用户
       return success(200, 'ok', user);
     }
   }
