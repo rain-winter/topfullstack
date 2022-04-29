@@ -11,7 +11,7 @@ async function bootstrap() {
     prefix: '/uploads',
   });
   const config = new DocumentBuilder()
-    .setTitle('全栈之巅后台管理API')
+    .setTitle('四月后台管理API')
     .setDescription('The cats API description')
     .setVersion('1.0')
     .addTag('🚀')

@@ -47,9 +47,4 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
-
-  @Get('/options/list')
-  options() {
-    return this.usersService.options();
-  }
 }

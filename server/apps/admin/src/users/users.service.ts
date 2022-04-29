@@ -79,11 +79,4 @@ export class UsersService {
       };
     }
   }
-
-  // 
-  options() {
-    return {
-      username,
-    };
-  }
 }

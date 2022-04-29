@@ -1,5 +1,7 @@
 <template>
-  <el-button type="primary" @click="dialogTableVisible = true">添加课程</el-button>
+  <el-button type="primary" @click="dialogTableVisible = true"
+    >添加课程</el-button
+  >
 
   <!-- 添加课程弹出框 -->
   <!-- 记得改后台的地址 -->
@@ -72,43 +74,47 @@
   </el-table>
 </template>
 <script setup>
-import axios from "axios";
-import { ElMessage } from "element-plus";
-import { Timer, Plus } from "@element-plus/icons-vue";
-import { reactive, ref } from "vue";
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
+import { Timer, Plus } from '@element-plus/icons-vue'
+import { reactive, ref } from 'vue'
 let state = reactive({
   tableData: [],
-});
-const name = ref("");
-const cover = ref(""); // 图片路径
-let dialogTableVisible = ref(false); // 添加弹出框
+})
+const name = ref('')
+const cover = ref('') // 图片路径
+let dialogTableVisible = ref(false) // 添加弹出框
 
 const getCourseList = () => {
   // 获取
-  axios.get("/courses").then((res) => {
-    state.tableData = res.data.data;
-  });
-};
-getCourseList();
+  axios.get('/courses').then((res) => {
+    console.log(res.data.data)
+    res.data.data.map((item) => {
+      item.cover = `http://localhost:3009/${item.cover}`
+    })
+    state.tableData = res.data.data
+  })
+}
+getCourseList()
 
 const addCourse = async () => {
   await axios
-    .post("/courses", {
+    .post('/courses', {
       name: name.value,
       cover: cover.value,
     })
-    .then((res) => {});
-  dialogTableVisible.value = false;
-  getCourseList();
-};
+    .then((res) => {})
+  dialogTableVisible.value = false
+  getCourseList()
+}
 
 const handleAvatarSuccess = (response, uploadFile) => {
-  console.log("uploadFile", uploadFile);
-  if (uploadFile.status === "success") {
-    cover.value = `http://localhost:3009/${response.url}`;
+  console.log('uploadFile', uploadFile)
+  if (uploadFile.status === 'success') {
+    cover.value = response.url
   }
   // imageUrl.value = URL.createObjectURL(uploadFile.raw)
-};
+}
 
 const beforeAvatarUpload = (rawFile) => {
   // if (rawFile.type !== "image/jpeg") {
@@ -118,17 +124,17 @@ const beforeAvatarUpload = (rawFile) => {
   //   ElMessage.error("Avatar picture size can not exceed 2MB!");
   //   return false;
   // }
-  return true;
-};
+  return true
+}
 
 const handleEdit = (index, row) => {
   // 编辑
-  console.log(index, row);
-};
+  console.log(index, row)
+}
 const handleDelete = (index, row) => {
   // 添加
-  console.log(index, row);
-};
+  console.log(index, row)
+}
 </script>
 <style>
 .img {
