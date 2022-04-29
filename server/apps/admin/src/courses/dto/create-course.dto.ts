@@ -10,5 +10,8 @@ export class CreateCourseDto {
   @ApiProperty({ description: '作者' })
   author: string;
 
+  @ApiProperty({ description: '分区' })
+  partition: string;
+
   episodes: any;
 }

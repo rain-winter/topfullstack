@@ -5,7 +5,12 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   server: {
     host: 'localhost',
-    port: 8080
+    port: 8080,
+    proxy: {
+			'/videolist': {
+				target: 'https://www.bilibili.com'
+			}
+		}
   },
   plugins: [vue()]
 })

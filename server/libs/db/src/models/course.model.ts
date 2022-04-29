@@ -21,6 +21,10 @@ export class Course {
   @Prop()
   author: string;
 
+  @ApiProperty({ description: '分区' })
+  @Prop()
+  partition: string;
+
   // @Prop({ type: String, required: true, default: [], itemsRef: 'Episode' })
   // episodes: Ref<Episode>[];
 }

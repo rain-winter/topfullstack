@@ -10,4 +10,7 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
 
   @ApiProperty({ description: '作者' })
   author?: string;
+
+  @ApiProperty({ description: '分区' })
+  partition: string;
 }

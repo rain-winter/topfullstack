@@ -30,7 +30,7 @@
   <!-- 表格 -->
   <el-table :data="state.tableData" style="width: 100%" table-layout="fixed">
     <el-table-column type="index" />
-    <el-table-column label="用户名">
+    <el-table-column show-overflow-tooltip label="课程名">
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
@@ -41,6 +41,13 @@
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <el-image class="img" width="80" :src="scope.row.cover" />
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column show-overflow-tooltip label="分区">
+      <template #default="scope">
+        <div style="display: flex; align-items: center">
+          <span style="margin-left: 10px">{{ scope.row.partition }}</span>
         </div>
       </template>
     </el-table-column>
