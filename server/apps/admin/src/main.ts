@@ -3,13 +3,16 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AdminModule } from './admin.module';
+import { AuthInterceptor } from './utils/AuthInterceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AdminModule);
   app.enableCors(); // 允许跨域
   app.useStaticAssets('uploads', {
+    // 设置上传文件路径
     prefix: '/uploads',
   });
+  app.useGlobalInterceptors(new AuthInterceptor());
   const config = new DocumentBuilder()
     .setTitle('四月后台管理API')
     .setDescription('The cats API description')

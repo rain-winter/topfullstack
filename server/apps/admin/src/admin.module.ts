@@ -6,6 +6,8 @@ import { CoursesModule } from './courses/courses.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CommonModule } from '@app/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthInterceptor } from './utils/AuthInterceptor';
 
 @Module({
   imports: [
@@ -20,6 +22,11 @@ import { CommonModule } from '@app/common';
     }),
   ],
   controllers: [AdminController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthInterceptor,
+    },
+  ],
 })
 export class AdminModule {}

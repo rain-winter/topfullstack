@@ -36,7 +36,7 @@
   <el-pagination background layout="prev, pager, next" :total="1000" />
 </template>
 <script setup>
-import axios from 'axios'
+import $api from '../../utils/request'
 
 import { Timer } from '@element-plus/icons-vue'
 import { reactive } from 'vue'
@@ -44,7 +44,7 @@ let state = reactive({
   tableData: [],
 })
 const getUserList = () => {
-  axios.get('/users').then((res) => {
+  $api.get('/users').then((res) => {
     state.tableData = res.data.data
   })
 }

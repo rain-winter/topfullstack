@@ -81,7 +81,7 @@
   </el-table>
 </template>
 <script setup>
-import axios from 'axios'
+import $api from '../../utils/request'
 import { ElMessage } from 'element-plus'
 import { Timer, Plus } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
@@ -94,18 +94,18 @@ let dialogTableVisible = ref(false) // 添加弹出框
 
 const getCourseList = () => {
   // 获取
-  axios.get('/courses').then((res) => {
-    console.log(res.data.data)
-    res.data.data.map((item) => {
+  $api.get('/courses').then((res) => {
+    console.log(res)
+    res.data.map((item) => {
       item.cover = `http://localhost:3009/${item.cover}`
     })
-    state.tableData = res.data.data
+    state.tableData = res.data
   })
 }
 getCourseList()
 
 const addCourse = async () => {
-  await axios
+  await $api
     .post('/courses', {
       name: name.value,
       cover: cover.value,
@@ -124,14 +124,13 @@ const handleAvatarSuccess = (response, uploadFile) => {
 }
 
 const beforeAvatarUpload = (rawFile) => {
-  // if (rawFile.type !== "image/jpeg") {
-  //   ElMessage.error("Avatar picture must be JPG format!");
-  //   return false;
-  // } else if (rawFile.size / 1024 / 1024 > 2) {
-  //   ElMessage.error("Avatar picture size can not exceed 2MB!");
-  //   return false;
-  // }
-  return true
+  if (rawFile.type !== "image/jpeg") {
+    ElMessage.error("Avatar picture must be JPG format!");
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error("Avatar picture size can not exceed 2MB!");
+    return false;
+  }
 }
 
 const handleEdit = (index, row) => {

@@ -35,7 +35,12 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
 import $api from '../../utils/request'
+
+const router = useRouter()
 const ruleFormRef = ref()
 const userdata = reactive({
   username: '',
@@ -66,10 +71,16 @@ const submitForm = (formEl) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log(formEl)
-      console.log('submit!')
       $api.post('/users/login', userdata).then((res) => {
-        console.log(res)
+        // console.log(res)
+        localStorage.setItem('token', res.data.token)
+        ElMessage({
+          message: '登录成功',
+          type: 'success',
+        })
+        router.push({
+          name: 'welcome',
+        })
       })
     } else {
       console.log('error submit!')
