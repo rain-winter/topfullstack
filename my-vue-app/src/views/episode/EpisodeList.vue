@@ -3,29 +3,10 @@
     <template v-for="(item, index) in epispdeList">
       <p>{{ item.courseId.name }}</p>
 
-      <!-- <video
-        src="../../assets/video1.mp4"
-        autoplay="autoplay"
-        loop
-        muted
-        controls
-        width="800"
-        height="200"
-      >
-        <source src="../../assets/video1.mp4" type="video/mp4" />
-      </video> -->
-
       <div class="video">
-        <img :src="posterSrc" alt="" />
-        <video
-          id="myVideo"
-          :poster="posterSrc"
-          width="180"
-          controls
-          src="../../assets/video1.mp4"
-        ></video>
-        <canvas ref="myCanvas"></canvas> -->
+        <img class="videoImg" :src="posterSrc" alt="" />
       </div>
+      {{ item.name }}
     </template>
   </div>
 </template>
@@ -36,40 +17,32 @@ import $api from '../../utils/request'
 let epispdeList = ref([])
 let posterSrc = ref('')
 
-let vimg = '../../assets/video1.mp4'
-
 const getEpisodeList = async () => {
   const res = await $api.get('/episodes')
   epispdeList.value = res.data
-  // console.log(res.data)
 }
 
 const getPoster = () => {
+  let dataURL = ''
   let video = document.createElement('video')
-  video.setAttribute('src', '../../src/assets/video1.mp4')
-  video.setAttribute('width', 400)
-  video.setAttribute('height', 240)
-  nextTick
-  console.log(video)
+  video.setAttribute('crossOrigin', 'anonymous') //处理跨域
+  video.setAttribute('src', ' http://localhost:3009/uploads/video1.mp4')
+  video.currentTime = 1
+  video.addEventListener('loadeddata', () => {
+    let canvas = document.createElement('canvas')
+    canvas.width = 909
+    canvas.height = 1920
+    canvas.getContext('2d').drawImage(video, 0, 0, 909, 1920) //绘制canvas
+    dataURL = canvas.toDataURL('image/jpeg') //转换为base64
+    posterSrc.value = dataURL
+  })
 }
 
 getEpisodeList()
 getPoster()
 </script>
 <style scoped>
-img {
+.videoImg {
   width: 200px;
-  height: 160px;
-  background-color: #eee;
 }
-/* .video-wrapper {
-  border: 1px solid red;
-}
-.video {
-  width: 160px;
-  height: 100px;
-  border-radius: 20px;
-  background-color: #fff;
-  border: 1px solid red;
-} */
 </style>

@@ -1,6 +1,6 @@
 <template>
   <el-table :data="state.tableData" style="width: 100%" table-layout="fixed">
-    <el-table-column label="用户名" >
+    <el-table-column label="用户名">
       <template #default="scope">
         <div style="display: flex; align-items: center">
           <el-icon><timer /></el-icon>
@@ -32,6 +32,8 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 分页 -->
+  <el-pagination background layout="prev, pager, next" :total="1000" />
 </template>
 <script setup>
 import axios from 'axios'

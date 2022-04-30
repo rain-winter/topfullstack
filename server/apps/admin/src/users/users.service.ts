@@ -1,3 +1,4 @@
+import { LoginDto } from './dto/login-dto';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,12 +7,43 @@ import { User } from '@libs/db/models/user.model';
 import { InjectModel } from 'nestjs-typegoose';
 import success from '../utils/common-res';
 import { PageDto } from '../common/page.dto';
-
+import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
   ) {}
+
+  async login(loginDto: LoginDto) {
+    const res = await this.userModel.findOne(
+      {
+        username: loginDto.username,
+      },
+      '_id username',
+    );
+    if (res) {
+      const password = await this.userModel.findOne({
+        password: loginDto.password,
+      });
+      const SECRET = process.env.SECRET;
+      const token = jwt.sign(
+        {
+          data: res._id,
+        },
+        SECRET,
+        { expiresIn: '1h' },
+      );
+      const resData = { ...res._doc, token };
+      if (password) {
+        return success(200, 'ok', resData);
+      } else {
+        return success(10001, '密码错误');
+      }
+    } else {
+      return success(10000, '用户不存在');
+    }
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = new this.userModel(createUserDto); // 添加用户
     const res = await user.save();

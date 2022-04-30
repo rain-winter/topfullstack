@@ -1,3 +1,4 @@
+import { LoginDto } from './dto/login-dto';
 import {
   Controller,
   Get,
@@ -18,6 +19,11 @@ import { PageDto } from '../common/page.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post('/login')
+  login(@Body() loginDto: LoginDto) {
+    return this.usersService.login(loginDto);
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
