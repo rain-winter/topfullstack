@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <h1>Demo1 page</h1>
+  <div>
+    <h1>demo1 page</h1>
     <NuxtLink to="/">go index</NuxtLink>
   </div>
 </template>

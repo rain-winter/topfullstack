@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <h1>index page</h1>
+  <div>
+    <p class="text-2xl">index page</p>
     <!-- <a href=""></a> -->
     <NuxtLink to="/demo1">demo1</NuxtLink>
   </div>

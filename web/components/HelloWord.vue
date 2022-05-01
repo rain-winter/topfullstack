@@ -1,13 +1,8 @@
 <template>
-  <h2>hello nuxt</h2>
+  <h1 class="text-blue-600 md:text-green-600">Hello world!</h1>
 </template>
 
 <script setup>
-import {} from "vue";
-console.log("helloword");
+
 </script>
-<style scoped>
-h2 {
-  color: red;
-}
-</style>
+<style scoped></style>
