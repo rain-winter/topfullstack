@@ -7,6 +7,7 @@
   <!-- 记得改后台的地址 -->
   <el-dialog v-model="dialogTableVisible" title="课程" destroy-on-close>
     <el-input v-model="name" placeholder="请输入课程名称" clearable />
+    <el-input class="partition" v-model="partition" placeholder="请输入课程的分区" clearable />
     <el-upload
       class="avatar-uploader"
       action="http://localhost:3009/upload"
@@ -90,6 +91,7 @@ let state = reactive({
 })
 const name = ref('')
 const cover = ref('') // 图片路径
+const partition = ref('')
 let dialogTableVisible = ref(false) // 添加弹出框
 
 const getCourseList = () => {
@@ -109,6 +111,7 @@ const addCourse = async () => {
     .post('/courses', {
       name: name.value,
       cover: cover.value,
+      partition: partition.value,
     })
     .then((res) => {})
   dialogTableVisible.value = false
@@ -124,12 +127,12 @@ const handleAvatarSuccess = (response, uploadFile) => {
 }
 
 const beforeAvatarUpload = (rawFile) => {
-  if (rawFile.type !== "image/jpeg") {
-    ElMessage.error("Avatar picture must be JPG format!");
-    return false;
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
   } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!");
-    return false;
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
   }
 }
 
@@ -173,5 +176,8 @@ const handleDelete = (index, row) => {
   width: 178px;
   height: 178px;
   text-align: center;
+}
+.partition{
+  margin-top: 20px;
 }
 </style>

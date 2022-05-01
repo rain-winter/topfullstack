@@ -14,25 +14,33 @@ const routes = [
       {
         name: 'welcome',
         path: '/welcome',
-        meta: '欢迎页',
+        meta: {
+          tile: 'Welcome to April'
+        },
         component: () => import('../views/welcome/Welcome.vue')
       },
       {
         name: 'courses',
         path: '/courses/list',
-        meta: '课程列表',
+        meta: {
+          title: '课程列表'
+        },
         component: () => import('../views/course/CourseList.vue'),
       },
       {
         name: 'episodes',
         path: '/episodes/list',
-        meta: '课时列表',
+        meta: {
+          title: '课时列表'
+        },
         component: () => import('../views/episode/EpisodeList.vue')
       },
       {
         name: 'users',
         path: '/users/list',
-        meta: '用户列表',
+        meta: {
+          title: '用户列表'
+        },
         component: () => import('../views/user/UserList.vue')
       },
       {

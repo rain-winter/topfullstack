@@ -15,6 +15,7 @@ export class CoursesService {
   ) {}
 
   async create(createCourseDto: CreateCourseDto) {
+    console.log(createCourseDto);
     const res = await this.courseModel.create(createCourseDto);
     return success(200, 'OK', res);
   }

@@ -32,7 +32,10 @@ export class AdminModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(TokenMiddleware)
-      .exclude({ path: 'users/login', method: RequestMethod.POST })
+      .exclude(
+        { path: 'users/login', method: RequestMethod.POST },
+        { path: 'upload', method: RequestMethod.POST },
+      )
       .forRoutes('*');
   }
 }

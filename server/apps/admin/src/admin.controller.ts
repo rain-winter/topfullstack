@@ -5,10 +5,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { FileUploadDto } from './common/file.dto';
 
 @ApiTags('上传文件')
+@ApiBearerAuth()
 @Controller()
 export class AdminController {
   @Post('upload') // 和service里的action一样

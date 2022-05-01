@@ -1,6 +1,7 @@
 <template>
   <!-- 添加课程弹出框 -->
   <el-dialog v-model="dialogTableVisible" title="课程" destroy-on-close>
+    <el-input v-model="partition" placeholder="请输入课程分区" clearable />
     <el-input v-model="name" placeholder="请输入课程名称" clearable />
     <el-upload
       class="avatar-uploader"
@@ -22,47 +23,49 @@
   </el-dialog>
 </template>
 <script setup>
-import { ElMessage } from "element-plus";
-import { Plus } from "@element-plus/icons-vue";
-import { ref } from "vue";
-import axios from "axios";
+import { ElMessage } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+import { ref } from 'vue'
+import $api from '../../utils/request'
 
-const name = ref("");
-const cover = ref(""); // 图片路径
+const name = ref('')
+const partition = ref('')
+const cover = ref('') // 图片路径
 
 defineProps({
   dialogTableVisible: Boolean,
-});
+})
 
 const addCourse = () => {
-  axios
-    .post("/courses", {
+  $api
+    .post('/courses', {
       name: name.value,
       cover: cover.value,
+      partition: partition.value,
     })
     .then((res) => {
-      dialogTableVisible = false;
-    });
-};
+      dialogTableVisible = false
+    })
+}
 
 const handleAvatarSuccess = (response, uploadFile) => {
-  console.log(uploadFile);
-  if (uploadFile.status === "success") {
-    cover.value = response.url;
+  console.log(uploadFile)
+  if (uploadFile.status === 'success') {
+    cover.value = response.url
   }
   // imageUrl.value = URL.createObjectURL(uploadFile.raw)
-};
+}
 
 const beforeAvatarUpload = (rawFile) => {
-  if (rawFile.type !== "image/jpeg") {
-    ElMessage.error("Avatar picture must be JPG format!");
-    return false;
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
   } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!");
-    return false;
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
   }
-  return true;
-};
+  return true
+}
 </script>
 
 <style>

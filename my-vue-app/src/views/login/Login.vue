@@ -74,6 +74,7 @@ const submitForm = (formEl) => {
       $api.post('/users/login', userdata).then((res) => {
         // console.log(res)
         localStorage.setItem('token', res.data.token)
+        localStorage.setItem('username', res.data.username)
         ElMessage({
           message: '登录成功',
           type: 'success',
