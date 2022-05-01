@@ -14,10 +14,13 @@ async function bootstrap() {
   });
   // app.useGlobalInterceptors(new AuthInterceptor());
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('四月后台管理API')
     .setDescription('The cats API description')
     .setVersion('1.0')
-    .addTag('🚀')
+    .addTag(
+      '🚀春风变得软软的，阳光像刚切开的浆果冻芝士一样甜腻鲜艳，最好不过人间四月',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-doc', app, document);

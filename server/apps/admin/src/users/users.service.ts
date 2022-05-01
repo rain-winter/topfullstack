@@ -33,7 +33,7 @@ export class UsersService {
         SECRET,
         { expiresIn: '10h' },
       );
-      const resData = { ...res._doc, token };
+      const resData: unknown = { ...res._doc, token };
       if (password) {
         return success(200, 'ok', resData);
       } else {
