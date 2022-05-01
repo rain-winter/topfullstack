@@ -45,7 +45,7 @@ let state = reactive({
 })
 const getUserList = () => {
   $api.get('/users').then((res) => {
-    state.tableData = res.data.data
+    state.tableData = res.data
   })
 }
 getUserList()

@@ -21,15 +21,18 @@ instace.interceptors.request.use((req) => {
 
 // 相应拦截
 instace.interceptors.response.use(res => {
-  const { data, code, msg } = res.data
-  if (code == 40001) {
+  const { data, code, msg } = res.data // 后端返回的数据
+  return { data, code, msg }
+}, error => {
+  if (error.response.status == 401) {
     ElMessage.error(TOKEN_INVALID)
     setTimeout(() => { }, 1500)
     router.push({
       name: 'login'
     })
+  } else {
+    ElMessage.error(NETWORK_ERROR)
   }
-  return { code, msg, data }
 })
 
 export default instace

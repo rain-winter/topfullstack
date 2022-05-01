@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
 import * as jwt from 'jsonwebtoken';
-import success from './common-res';
 
 // token拦截器
 @Injectable()
@@ -21,7 +20,10 @@ export class AuthInterceptor implements NestInterceptor {
       return next.handle().pipe(tap());
     } catch (error) {
       // TODO 这里暂时不能解决，但是保错不影响代码执行
-      return success(40001, 'token过期了，请重新登录');
+      // TODO 使用拦截器，不可以排除某些路径
+      // TODO 使用中间件
+      // TODO 使用内置的AUTH token
+      // return success(40001, 'token过期了，请重新登录');
     }
   }
 }

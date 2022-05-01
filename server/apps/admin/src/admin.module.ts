@@ -1,13 +1,12 @@
+import { TokenMiddleware } from './utils/token.middleware';
 import { AdminController } from './admin.controller';
 import { DbModule } from '@libs/db';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { CoursesModule } from './courses/courses.module';
 import { EpisodeModule } from './episode/episode.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CommonModule } from '@app/common';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { AuthInterceptor } from './utils/AuthInterceptor';
 
 @Module({
   imports: [
@@ -23,10 +22,17 @@ import { AuthInterceptor } from './utils/AuthInterceptor';
   ],
   controllers: [AdminController],
   providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: AuthInterceptor,
-    },
+    // { // 拦截器
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: AuthInterceptor,
+    // },
   ],
 })
-export class AdminModule {}
+export class AdminModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(TokenMiddleware)
+      .exclude({ path: 'users/login', method: RequestMethod.POST })
+      .forRoutes('*');
+  }
+}

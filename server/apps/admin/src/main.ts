@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AdminModule } from './admin.module';
-import { AuthInterceptor } from './utils/AuthInterceptor';
+// import { AuthInterceptor } from './utils/AuthInterceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AdminModule);
@@ -12,7 +12,7 @@ async function bootstrap() {
     // 设置上传文件路径
     prefix: '/uploads',
   });
-  app.useGlobalInterceptors(new AuthInterceptor());
+  // app.useGlobalInterceptors(new AuthInterceptor());
   const config = new DocumentBuilder()
     .setTitle('四月后台管理API')
     .setDescription('The cats API description')
