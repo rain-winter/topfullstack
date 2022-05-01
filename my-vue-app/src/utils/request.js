@@ -19,7 +19,10 @@ instace.interceptors.request.use((req) => {
   return req
 })
 
-// 相应拦截
+/**
+ * 相应拦截
+ * res, error.error部分解析失败的请求（400，401 400等）
+ */
 instace.interceptors.response.use(res => {
   const { data, code, msg } = res.data // 后端返回的数据
   return { data, code, msg }

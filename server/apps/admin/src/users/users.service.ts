@@ -31,7 +31,7 @@ export class UsersService {
           data: res._id,
         },
         SECRET,
-        { expiresIn: '10s' },
+        { expiresIn: '10h' },
       );
       const resData = { ...res._doc, token };
       if (password) {
