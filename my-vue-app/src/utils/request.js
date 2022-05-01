@@ -24,8 +24,8 @@ instace.interceptors.request.use((req) => {
  * res, error.error部分解析失败的请求（400，401 400等）
  */
 instace.interceptors.response.use(res => {
-  const { data, code, msg } = res.data // 后端返回的数据
-  return { data, code, msg }
+  // 返回后端返回的数据
+  return res.data
 }, error => {
   if (error.response.status == 401) {
     ElMessage.error(TOKEN_INVALID)

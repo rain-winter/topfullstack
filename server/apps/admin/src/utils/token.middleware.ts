@@ -13,9 +13,10 @@ import success from './common-res';
 export class TokenMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const headers = req.headers;
-    const token = headers.authorization.split(' ')[1];
+
     const SECRET = process.env.SECRET;
     try {
+      const token = headers.authorization.split(' ')[1];
       jwt.verify(token, SECRET);
       next();
     } catch (error) {

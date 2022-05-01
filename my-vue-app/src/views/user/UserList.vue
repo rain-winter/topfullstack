@@ -33,7 +33,12 @@
     </el-table-column>
   </el-table>
   <!-- 分页 -->
-  <el-pagination background layout="prev, pager, next" :total="1000" />
+  <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="state.totalPage"
+    @current-change="handleCurrentChange"
+  />
 </template>
 <script setup>
 import $api from '../../utils/request'
@@ -42,13 +47,17 @@ import { Timer } from '@element-plus/icons-vue'
 import { reactive } from 'vue'
 let state = reactive({
   tableData: [],
+  currentPage: 1,
+  pageSize: 10,
+  totalPage: 0,
 })
-const getUserList = () => {
-  $api.get('/users').then((res) => {
+const getUserList = (currentPage, pageSize) => {
+  $api.get('/users', { params: { currentPage, pageSize } }).then((res) => {
     state.tableData = res.data
+    state.totalPage = res.total
+    console.log(res)
   })
 }
-getUserList()
 
 const handleEdit = (index, row) => {
   console.log(index, row)
@@ -56,4 +65,9 @@ const handleEdit = (index, row) => {
 const handleDelete = (index, row) => {
   console.log(index, row)
 }
+const handleCurrentChange = (val) => {
+  getUserList(val, state.pageSize) // 获取用户列表
+}
+
+getUserList(state.currentPage, state.pageSize) // 获取用户列表
 </script>

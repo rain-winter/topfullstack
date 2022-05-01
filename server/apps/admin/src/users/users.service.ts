@@ -31,7 +31,7 @@ export class UsersService {
           data: res._id,
         },
         SECRET,
-        { expiresIn: '10h' },
+        { expiresIn: '4d' },
       );
       const resData: unknown = { ...res._doc, token };
       if (password) {
@@ -55,19 +55,20 @@ export class UsersService {
    * TODO Model.find({}).skip((page -1)*PageSize).limit(PageSize)
    */
   async findAll(page?: PageDto) {
+    // let total;
+    // this.userModel.estimatedDocumentCount({}, (err, count) => {
+    //   total = count; // 总记录数
+    // });
+
+    const total = await this.userModel.estimatedDocumentCount();
+
     if (page.currentPage && page.pageSize) {
       const { currentPage, pageSize } = page;
-      let total;
-      this.userModel.estimatedDocumentCount({}, (err, count) => {
-        // console.log(count);
-        total = count;
-      });
       const users = await this.userModel
         .find()
         .skip((currentPage - 1) * pageSize)
         .limit(pageSize)
         .sort({ _id: -1 });
-
       return {
         code: 200,
         msg: '获取成功',
@@ -75,8 +76,13 @@ export class UsersService {
         data: users,
       };
     } else {
-      const user = await this.userModel.find(); // 查找所有用户
-      return success(200, 'ok', user);
+      const users = await this.userModel.find(); // 查找所有用户
+      return {
+        code: 200,
+        msg: '获取成功',
+        total: total,
+        data: users,
+      };
     }
   }
 
