@@ -5,6 +5,9 @@
     default-active="1"
     router
     active-text-color="#3498db"
+    background-color="#2c3e50"
+    text-color="#ffffff"
+    class="el-menu"
   >
     <el-sub-menu
       v-for="(item, index) in menuList.item"
@@ -39,10 +42,10 @@ let menu = {
           title: '课程管理',
           path: '/courses/list',
         },
-        {
-          title: '课时管理',
-          path: '/episodes/list',
-        },
+        // { // 以后在做
+        //   title: '课时管理',
+        //   path: '/episodes/list',
+        // },
       ],
     },
     {
@@ -52,10 +55,10 @@ let menu = {
           title: '用户管理',
           path: '/users/list',
         },
-        {
-          title: 'test',
-          path: '/test',
-        },
+        // { 此路由已删除
+        //   title: 'test',
+        //   path: '/test',
+        // },
       ],
     },
   ],
@@ -68,3 +71,8 @@ const handleSelect = () => {
   console.log('select')
 }
 </script>
+<style scoped>
+.el-menu {
+  height: calc(100vh - 60px);
+}
+</style>

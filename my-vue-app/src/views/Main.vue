@@ -10,9 +10,9 @@
         </el-aside>
         <el-container>
           <el-main> <router-view /></el-main>
-          <el-footer>
+          <!-- <el-footer>
             <Footer />
-          </el-footer>
+          </el-footer> -->
         </el-container>
       </el-container>
     </el-container>

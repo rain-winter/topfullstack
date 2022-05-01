@@ -18,40 +18,47 @@
         {{ scope.row.updatedAt }}
       </template>
     </el-table-column>
-    <el-table-column label="Operations">
+    <el-table-column fixed="right" label="Operations" width="120">
       <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-          >Edit</el-button
+        <el-button type="text" size="small" @click="handleEdit(scope.row)"
+          >编辑</el-button
         >
-        <el-button
-          size="small"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-          >Delete</el-button
+
+        <el-button type="text" size="small" @click="handleDelete(scope.row)"
+          >删除</el-button
         >
       </template>
     </el-table-column>
   </el-table>
   <!-- 分页 -->
   <el-pagination
+    class="pagination"
     background
     layout="prev, pager, next"
     :total="state.totalPage"
     @current-change="handleCurrentChange"
   />
 </template>
+
 <script setup>
 import $api from '../../utils/request'
 
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { Timer } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+
+const visible = ref(false)
 let state = reactive({
   tableData: [],
   currentPage: 1,
   pageSize: 10,
   totalPage: 0,
 })
-const getUserList = (currentPage, pageSize) => {
+
+const getUserList = (
+  currentPage = state.currentPage,
+  pageSize = state.pageSize
+) => {
   $api.get('/users', { params: { currentPage, pageSize } }).then((res) => {
     state.tableData = res.data
     state.totalPage = res.total
@@ -59,15 +66,25 @@ const getUserList = (currentPage, pageSize) => {
   })
 }
 
-const handleEdit = (index, row) => {
-  console.log(index, row)
+const handleEdit = (row) => {
+  console.log(row)
 }
-const handleDelete = (index, row) => {
-  console.log(index, row)
+
+const handleDelete = (row) => {
+  $api.delete(`/users/${row._id}`).then((res) => {
+    if (res.data == 1) {
+      ElMessage({
+        message: `成功删除${row.username}`,
+        type: 'success',
+      })
+      getUserList() // 获取用户列表
+    }
+  })
 }
+
 const handleCurrentChange = (val) => {
   getUserList(val, state.pageSize) // 获取用户列表
 }
 
-getUserList(state.currentPage, state.pageSize) // 获取用户列表
+getUserList() // 获取用户列表
 </script>

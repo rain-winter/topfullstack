@@ -23,4 +23,9 @@
   margin: 0;
   padding: 0;
 }
+.pagination {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
 </style>
