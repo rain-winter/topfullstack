@@ -7,7 +7,12 @@
   <!-- 记得改后台的地址 -->
   <el-dialog v-model="dialogTableVisible" title="课程" destroy-on-close>
     <el-input v-model="name" placeholder="请输入课程名称" clearable />
-    <el-input class="partition" v-model="partition" placeholder="请输入课程的分区" clearable />
+    <el-input
+      class="partition"
+      v-model="partition"
+      placeholder="请输入课程的分区"
+      clearable
+    />
     <el-upload
       class="avatar-uploader"
       action="http://localhost:3009/upload"
@@ -23,7 +28,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取消</el-button>
-        <el-button type="primary" @click="addCourse">确定</el-button>
+        <el-button type="primary" @click="EditCourse('add')">确定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -68,7 +73,7 @@
 
     <el-table-column label="Operations">
       <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+        <el-button size="small" @click="EditCourse('update', scope.row)"
           >Edit</el-button
         >
         <el-button
@@ -89,9 +94,9 @@ import { reactive, ref } from 'vue'
 let state = reactive({
   tableData: [],
 })
-const name = ref('')
-const cover = ref('') // 图片路径
-const partition = ref('')
+let name = ref('')
+let cover = ref('') // 图片路径
+let partition = ref('')
 let dialogTableVisible = ref(false) // 添加弹出框
 
 const getCourseList = () => {
@@ -104,17 +109,43 @@ const getCourseList = () => {
     state.tableData = res.data
   })
 }
-getCourseList()
 
-const addCourse = async () => {
-  await $api
-    .post('/courses', {
-      name: name.value,
-      cover: cover.value,
-      partition: partition.value,
-    })
-    .then((res) => {})
-  dialogTableVisible.value = false
+const EditCourse = async (param, row = null) => {
+  if (param == 'add') {
+    $api
+      .post('/courses', {
+        name: name.value,
+        cover: cover.value,
+        partition: partition.value,
+      })
+      .then((res) => {
+        dialogTableVisible.value = false
+      })
+  } else {
+    // dialogTableVisible.value = true
+    // const id = row._id
+    // cover.value = row.cover
+    // name.value = row.value
+    // partition.value = row.value
+    // console.log('cover.value', cover)
+    // console.log('name.value', name.value)
+    // console.log('partition.value', partition.value)
+    // console.log(row.name)
+    // console.log(row.cover)
+    // console.log(row.partition)
+    // return
+    // $api
+    //   .patch(`/courses/${id}`, {
+    //     param: {
+    //       cover: cover.value,
+    //       name: name.value,
+    //       partition: partition.value,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //   })
+  }
   getCourseList()
 }
 
@@ -138,12 +169,17 @@ const beforeAvatarUpload = (rawFile) => {
 
 const handleEdit = (index, row) => {
   // 编辑
-  console.log(index, row)
+  // partition.value = row.partition
+  // cover.value = row.cover
+  // name.value = row.name
+  // dialogTableVisible.value = true
 }
 const handleDelete = (index, row) => {
-  // 添加
+  // 删除
   console.log(index, row)
 }
+
+getCourseList()
 </script>
 <style>
 .img {
@@ -177,7 +213,7 @@ const handleDelete = (index, row) => {
   height: 178px;
   text-align: center;
 }
-.partition{
+.partition {
   margin-top: 20px;
 }
 </style>

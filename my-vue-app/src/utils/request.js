@@ -27,6 +27,7 @@ instace.interceptors.response.use(res => {
   // 返回后端返回的数据
   return res.data
 }, error => {
+  console.log(error.response.status)
   if (error.response.status == 401) {
     ElMessage.error(TOKEN_INVALID)
     setTimeout(() => { }, 1500)

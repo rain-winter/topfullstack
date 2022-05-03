@@ -1,3 +1,4 @@
+import { SearchDto } from './dto/search.dao';
 import { PageDto } from '../common/page.dto';
 import { Course } from '@libs/db/models/course.model';
 import { Injectable } from '@nestjs/common';
@@ -13,6 +14,20 @@ export class CoursesService {
     @InjectModel(Course)
     private readonly courseModel: ReturnModelType<typeof Course>,
   ) {}
+
+  async serach(searchDto: SearchDto) {
+    const { key } = searchDto;
+    const reg = new RegExp(key, 'i');
+    console.log(reg);
+    const res = await this.courseModel.find({
+      $or: [{ name: { $regex: reg } }, { partition: { $regex: reg } }],
+    });
+    return success(200, 'ok', res);
+    console.log(res);
+    if (res) {
+      return success(200, 'ok', res);
+    }
+  }
 
   async create(createCourseDto: CreateCourseDto) {
     console.log(createCourseDto);

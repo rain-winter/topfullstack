@@ -1,5 +1,6 @@
+import { SearchDto } from './dto/search.dao';
 import { PageDto } from '../common/page.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
   Controller,
   Get,
@@ -16,9 +17,15 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
 @ApiTags('课程')
+@ApiBearerAuth()
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
+
+  @Get('/search')
+  search(@Query() searchDto: SearchDto) {
+    return this.coursesService.serach(searchDto);
+  }
 
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {

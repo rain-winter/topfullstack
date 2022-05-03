@@ -17,7 +17,8 @@ export class TokenMiddleware implements NestMiddleware {
     const SECRET = process.env.SECRET;
     try {
       const token = headers.authorization.split(' ')[1];
-      jwt.verify(token, SECRET);
+      const userInfo = jwt.verify(token, SECRET);
+      console.log(userInfo);
       next();
     } catch (error) {
       // 未经授权提示
