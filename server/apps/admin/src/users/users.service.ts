@@ -60,10 +60,15 @@ export class UsersService {
     //   total = count; // 总记录数
     // });
 
-    const total = await this.userModel.estimatedDocumentCount();
+    let total = await this.userModel.estimatedDocumentCount();
 
     if (page.currentPage && page.pageSize) {
       const { currentPage, pageSize } = page;
+
+      // if (total % pageSize) {
+      //   total = Math.ceil(total % pageSize);
+      // }
+      console.log(total);
       const users = await this.userModel
         .find()
         .skip((currentPage - 1) * pageSize)

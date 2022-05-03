@@ -35,6 +35,7 @@
     class="pagination"
     background
     layout="prev, pager, next"
+    :page-size="state.pageSize"
     :total="state.totalPage"
     @current-change="handleCurrentChange"
   />
@@ -51,7 +52,7 @@ const visible = ref(false)
 let state = reactive({
   tableData: [],
   currentPage: 1,
-  pageSize: 10,
+  pageSize: 5,
   totalPage: 0,
 })
 

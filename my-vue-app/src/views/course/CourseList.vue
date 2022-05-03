@@ -1,8 +1,18 @@
 <template>
-  <el-button type="primary" @click="dialogTableVisible = true"
-    >添加课程</el-button
-  >
-
+  <span style="display: flex; margin-bottom: 20px">
+    <el-button type="primary" @click="dialogTableVisible = true"
+      >添加课程</el-button
+    >
+    <div class="search">
+      <el-input
+        v-model="key"
+        clearable
+        @clear="handleClear"
+        placeholder="请输入关键字"
+      />
+      <el-button type="success" @click="handleSearch">搜索课程</el-button>
+    </div>
+  </span>
   <!-- 添加课程弹出框 -->
   <!-- 记得改后台的地址 -->
   <el-dialog v-model="dialogTableVisible" title="课程" destroy-on-close>
@@ -28,7 +38,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogTableVisible = false">取消</el-button>
-        <el-button type="primary" @click="EditCourse('add')">确定</el-button>
+        <el-button type="primary" @click="addCourse">确定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -85,6 +95,16 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 分页 -->
+  <!-- 需要绑定 page-size 和 total-->
+  <el-pagination
+    class="pagination"
+    background
+    layout="prev, pager, next"
+    :page-size="state.pageSize"
+    :total="state.totalPage"
+    @current-change="handleCurrentChange"
+  />
 </template>
 <script setup>
 import $api from '../../utils/request'
@@ -93,59 +113,85 @@ import { Timer, Plus } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 let state = reactive({
   tableData: [],
+  currentPage: 1,
+  pageSize: 4,
+  totalPage: 0,
 })
 let name = ref('')
 let cover = ref('') // 图片路径
 let partition = ref('')
+let key = ref('') // 关键字搜索
 let dialogTableVisible = ref(false) // 添加弹出框
 
-const getCourseList = () => {
+const getCourseList = (
+  currentPage = state.currentPage,
+  pageSize = state.pageSize
+) => {
   // 获取
-  $api.get('/courses').then((res) => {
+  $api.get('/courses', { params: { currentPage, pageSize } }).then((res) => {
     console.log(res)
     res.data.map((item) => {
       item.cover = `http://localhost:3009/${item.cover}`
     })
     state.tableData = res.data
+    state.totalPage = res.total
   })
 }
 
-const EditCourse = async (param, row = null) => {
-  if (param == 'add') {
-    $api
-      .post('/courses', {
-        name: name.value,
-        cover: cover.value,
-        partition: partition.value,
+const handleCurrentChange = (val) => {
+  getCourseList(val, state.pageSize) // 获取用户列表
+}
+
+const handleSearch = () => {
+  console.log(key.value)
+  $api.get('/courses/search', { params: { key: key.value } }).then((res) => {
+    if (res) {
+      res.data.map((item) => {
+        item.cover = item.cover = `http://localhost:3009/${item.cover}`
       })
-      .then((res) => {
-        dialogTableVisible.value = false
-      })
-  } else {
-    // dialogTableVisible.value = true
-    // const id = row._id
-    // cover.value = row.cover
-    // name.value = row.value
-    // partition.value = row.value
-    // console.log('cover.value', cover)
-    // console.log('name.value', name.value)
-    // console.log('partition.value', partition.value)
-    // console.log(row.name)
-    // console.log(row.cover)
-    // console.log(row.partition)
-    // return
-    // $api
-    //   .patch(`/courses/${id}`, {
-    //     param: {
-    //       cover: cover.value,
-    //       name: name.value,
-    //       partition: partition.value,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //   })
-  }
+      state.tableData = res.data
+    }
+  })
+}
+const handleClear = () => {
+  getCourseList()
+}
+
+const addCourse = async () => {
+  $api
+    .post('/courses', {
+      name: name.value,
+      cover: cover.value,
+      partition: partition.value,
+    })
+    .then((res) => {
+      dialogTableVisible.value = false
+    })
+
+  // dialogTableVisible.value = true
+  // const id = row._id
+  // cover.value = row.cover
+  // name.value = row.value
+  // partition.value = row.value
+  // console.log('cover.value', cover)
+  // console.log('name.value', name.value)
+  // console.log('partition.value', partition.value)
+  // console.log(row.name)
+  // console.log(row.cover)
+  // console.log(row.partition)
+  // return
+  // $api
+  //   .patch(`/courses/${id}`, {
+  //     param: {
+  //       cover: cover.value,
+  //       name: name.value,
+  //       partition: partition.value,
+  //     },
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+
   getCourseList()
 }
 
@@ -176,12 +222,25 @@ const handleEdit = (index, row) => {
 }
 const handleDelete = (index, row) => {
   // 删除
-  console.log(index, row)
+  const id = row._id
+  console.log(id)
+  $api.delete(`courses/${id}`).then((res) => {
+    ElMessage.success(`删除了一条数据`)
+  })
 }
 
 getCourseList()
 </script>
 <style>
+.search {
+  width: 200px;
+  margin-left: 50px;
+  display: flex;
+}
+.search input {
+  width: 150px;
+  margin-right: 10px;
+}
 .img {
   width: 80px;
 }

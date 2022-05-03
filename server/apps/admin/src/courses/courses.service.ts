@@ -23,10 +23,6 @@ export class CoursesService {
       $or: [{ name: { $regex: reg } }, { partition: { $regex: reg } }],
     });
     return success(200, 'ok', res);
-    console.log(res);
-    if (res) {
-      return success(200, 'ok', res);
-    }
   }
 
   async create(createCourseDto: CreateCourseDto) {
@@ -36,28 +32,33 @@ export class CoursesService {
   }
 
   async findAll(page?: PageDto) {
+    const total = await this.courseModel.estimatedDocumentCount();
+
     if (page.currentPage && page.pageSize) {
       const { currentPage, pageSize } = page;
-      let total;
-      this.courseModel.estimatedDocumentCount({}, (err, count) => {
-        // console.log(count);
-        total = count;
-      });
-      const courses = await this.courseModel
+      // if (total % pageSize) {
+      //   total = Math.ceil(total);
+      // }
+      console.log(total);
+      const users = await this.courseModel
         .find()
         .skip((currentPage - 1) * pageSize)
         .limit(pageSize)
         .sort({ _id: -1 });
-
       return {
         code: 200,
         msg: '获取成功',
         total,
-        data: courses,
+        data: users,
       };
     } else {
-      const courses = await this.courseModel.find(); // 查找所有用户
-      return success(200, 'ok', courses);
+      const users = await this.courseModel.find(); // 查找所有用户
+      return {
+        code: 200,
+        msg: '获取成功',
+        total: total,
+        data: users,
+      };
     }
   }
 
@@ -73,6 +74,9 @@ export class CoursesService {
   }
 
   async remove(id: string) {
-    return await this.courseModel.remove({ _id: id });
+    const res = await this.courseModel.remove({ _id: id });
+    if (res.deletedCount == 1) {
+      return success(200, '删除成功');
+    }
   }
 }

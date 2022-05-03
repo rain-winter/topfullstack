@@ -17,6 +17,7 @@
             placeholder="密码"
             type="password"
             autocomplete="off"
+            show-password
           />
         </el-form-item>
 
