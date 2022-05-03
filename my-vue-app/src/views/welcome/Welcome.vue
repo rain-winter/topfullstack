@@ -14,7 +14,9 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: #fff;
+  background-color: #1c8fee5f;
+  background-image: url(../../assets/bak.png);
+  background-size: 100% 100%;
 }
 .welcome-left {
   margin-bottom: 50px;
@@ -26,13 +28,15 @@
 .sub-title {
   font-size: 40px;
   line-height: 62px;
-  color: #409eff;
+  /* color: #409eff; */
+  color: #fff;
 }
 
 .img {
   width: 371px;
   height: 438px;
   margin-left: 105px;
-  background-image: url(../../assets/welcome.png);
+  background-image: url(../../assets/11.png);
+  background-size: 100% 100%;
 }
 </style>

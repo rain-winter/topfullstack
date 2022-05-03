@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <img class="logoImg" src="../assets/logo.png" alt="" />
-    <p>四月后台管理系统</p>
+    <img class="logoImg" src="../assets/1.png" alt="" />
+    <p>四月后</p>
     <div class="BreadCrumb">
       <BreadCrumb />
     </div>
@@ -41,20 +41,23 @@ const handleLogout = () => {
 </script>
 <style scoped>
 .header {
+  height: 60px;
   display: flex;
   align-items: center;
 }
 .logoImg {
   width: 40px;
   height: 40px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   border-radius: 50%;
 }
 p {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .BreadCrumb {
-  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  margin-left: 90px;
 }
 .drop-down {
   position: fixed;

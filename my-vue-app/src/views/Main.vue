@@ -9,7 +9,7 @@
           <MenuAside />
         </el-aside>
         <el-container>
-          <el-main> <router-view /></el-main>
+          <el-main class="main" style="padding: 0"> <router-view /></el-main>
           <!-- <el-footer>
             <Footer />
           </el-footer> -->
@@ -23,4 +23,8 @@ import MenuAside from '../components/MenuAside.vue'
 import Footer from '../components/Footer.vue'
 import Header from '../components/Header.vue'
 </script>
-<style></style>
+<style>
+.main {
+  height: calc(100vh - 60px);
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <span style="display: flex; margin-bottom: 20px">
+  <span style="display: flex; margin-bottom: 20px; margin-left: 20px">
     <el-button type="primary" @click="dialogTableVisible = true"
       >添加课程</el-button
     >
@@ -30,7 +30,7 @@
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
     >
-      <img v-if="cover" :src="cover" class="avatar" />
+      <img v-if="cover" :src="coverTmp" class="avatar" />
       <el-icon v-else class="avatar-uploader-icon">
         <Plus />
       </el-icon>
@@ -119,6 +119,7 @@ let state = reactive({
 })
 let name = ref('')
 let cover = ref('') // 图片路径
+let coverTmp = ref('')
 let partition = ref('')
 let key = ref('') // 关键字搜索
 let dialogTableVisible = ref(false) // 添加弹出框
@@ -198,6 +199,7 @@ const addCourse = async () => {
 const handleAvatarSuccess = (response, uploadFile) => {
   console.log('uploadFile', uploadFile)
   if (uploadFile.status === 'success') {
+    coverTmp.value = `http://localhost:3009/${response.url}`
     cover.value = response.url
   }
   // imageUrl.value = URL.createObjectURL(uploadFile.raw)
@@ -226,6 +228,7 @@ const handleDelete = (index, row) => {
   console.log(id)
   $api.delete(`courses/${id}`).then((res) => {
     ElMessage.success(`删除了一条数据`)
+    getCourseList()
   })
 }
 
